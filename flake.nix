@@ -8,9 +8,14 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    plasma-manager = {
+      url = "github:nix-community/plasma-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, plasma-manager, ... }@inputs:
     let hosts = [ { name = "gengar"; } { name = "nixos-vm"; } ];
     in {
 
@@ -32,6 +37,7 @@
                 useUserPackages = true;
                 users.dennis = import ./home.nix;
                 backupFileExtension = "backup";
+                sharedModules = [ plasma-manager.homeModules.plasma-manager ];
               };
             }
           ];

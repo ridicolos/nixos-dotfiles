@@ -103,7 +103,6 @@
   programs.thunderbird = { enable = true; };
 
   environment.systemPackages = with pkgs; [
-    pwvucontrol
     qemu_kvm
     curl
     wget
@@ -136,6 +135,8 @@
 
     kdePackages.kleopatra
     kdePackages.kdenlive
+    kdePackages.okular
+    pwvucontrol
     zathura
     calibre
     # jellyfin-media-player qt5 security concern
