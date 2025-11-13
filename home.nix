@@ -11,9 +11,11 @@ let
     dunst = "dunst";
     rofi = "rofi";
     uwsm = "uwsm";
+    foot = "foot";
 
     xfce4 = "xfce4";
 
+    fastfetch = "fastfetch";
     swappy = "swappy";
     zathura = "zathura";
     nvim = "nvim";
@@ -38,10 +40,6 @@ in {
   home.homeDirectory = "/home/dennis";
   programs.git.enable = true;
   home.stateVersion = "25.05";
-  programs.zsh = {
-    enable = true;
-    shellAliases = { btw = "echo I use nixos, btw"; };
-  };
 
   xdg.configFile = builtins.mapAttrs (name: subpath: {
     source = create_symlink "${dotfiles}/${subpath}";

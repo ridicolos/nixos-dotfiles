@@ -1,13 +1,6 @@
 { config, pkgs, ... }:
 
 {
-
-  #TODO: This is shit
-  # Bootloader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/vda";
-  boot.loader.grub.useOSProber = true;
-  boot.growPartition = true;
   networking.networkmanager.enable = true;
 
   time.timeZone = "Europe/Berlin";
@@ -30,11 +23,11 @@
     variant = "us";
   };
 
+  security.polkit.enable = true;
+
   console.keyMap = "de";
 
   services.printing.enable = true;
-
-  security.polkit.enable = true;
 
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
@@ -55,7 +48,7 @@
     isNormalUser = true;
     shell = pkgs.zsh;
     description = "dennis";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "libvirtd" ];
   };
 
   # Install firefox.
@@ -96,15 +89,15 @@
     openssl
     speedtest-cli
     tealdeer
-    #tesseract
+    tesseract
     cmake
     php
     gcc
     virtualenv
-    python3Full
+    python3Minimal
     direnv
-    #texliveFull
-    #texlivePackages.german
+    texliveFull
+    texlivePackages.german
     tesseract
     htop
     tree
@@ -115,11 +108,12 @@
 
     kdePackages.kleopatra
     kdePackages.kdenlive
+    zathura
     thunderbird
     wireshark
     calibre
-    jellyfin-media-player
-    # rustdesk
+    # jellyfin-media-player qt5 security concern
+    rustdesk-flutter
     spotify
     zotero
     mumble
@@ -136,8 +130,18 @@
     audacity
     qbittorrent
     handbrake
-    gparted
+    razergenie
+    logseq
+    nextcloud-client
+    virt-manager
   ];
+
+  hardware = {
+    nitrokey.enable = true;
+    wooting.enable = true;
+    openrazer.enable = true;
+    flipperzero.enable = true;
+  };
 
   fonts.packages = with pkgs; [
     nerd-fonts.iosevka
@@ -145,7 +149,11 @@
     nerd-fonts.hack
   ];
 
-  virtualisation = { docker.enable = true; };
+  virtualisation = {
+    docker.enable = true;
+    libvirtd.enable = true;
+    spiceUSBRedirection = true;
+  };
 
   # List services that you want to enable:
 
@@ -160,5 +168,4 @@
 
   system.stateVersion = "25.05"; # Did you read the comment?
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
 }

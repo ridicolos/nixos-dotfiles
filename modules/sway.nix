@@ -15,42 +15,43 @@
           prettyName = "Sway";
           comment = "Sway by UWSM";
           binPath = "/run/current-system/sw/bin/sway";
+          extraArgs = [ "--env-file /home/dennis/.config/uwsm/env-sway" ];
         };
       };
+    };
+    xdg.portal = {
+      enable = true;
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-wlr
+        xdg-desktop-portal-gtk
+      ];
     };
     programs.sway = {
       enable = true;
       wrapperFeatures.gtk = true;
       xwayland.enable = true;
+      extraPackages = with pkgs; [
+        waybar
+        dunst
+        swaylock
+        swayidle
+        swaybg
+        cliphist
+        grim
+        slurp
+        swappy
+        wl-mirror # raus
+        nwg-look
+        nwg-displays
+        imv # raus
+        mpv # raus
+        brightnessctl # raus
+        seahorse
+        wlsunset
+        hyprpicker
+        networkmanagerapplet
+        rofi
+      ];
     };
-
-    environment.systemPackages = with pkgs; [
-      waybar
-      dunst
-      uwsm
-      swaylock
-      swayidle
-      swaybg
-      rofi
-      rofi-emoji
-      rofi-calc
-      cliphist
-      grim
-      slurp
-      swappy
-      wl-mirror # raus
-      nwg-look
-      nwg-displays
-      imv # raus
-      mpv # raus
-      xdg-desktop-portal
-      xdg-desktop-portal-wlr
-      xdg-desktop-portal-gtk
-      brightnessctl # raus
-      seahorse
-      wlsunset
-      hyprpicker
-      networkmanagerapplet
-    ];
   };
 }
