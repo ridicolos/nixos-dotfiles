@@ -48,7 +48,7 @@
     isNormalUser = true;
     shell = pkgs.zsh;
     description = "dennis";
-    extraGroups = [ "networkmanager" "wheel" "docker" "libvirtd" ];
+    extraGroups = [ "networkmanager" "wheel" ];
   };
 
   # Install firefox.
@@ -74,7 +74,10 @@
     spice-autorandr.enable = true;
   };
 
+  programs.thunderbird = { enable = true; };
+
   environment.systemPackages = with pkgs; [
+    qemu_kvm
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     curl
     wget
@@ -98,6 +101,7 @@
     direnv
     texliveFull
     texlivePackages.german
+    biber
     tesseract
     htop
     tree
@@ -109,7 +113,6 @@
     kdePackages.kleopatra
     kdePackages.kdenlive
     zathura
-    thunderbird
     wireshark
     calibre
     # jellyfin-media-player qt5 security concern
@@ -133,7 +136,6 @@
     razergenie
     logseq
     nextcloud-client
-    virt-manager
   ];
 
   hardware = {
@@ -149,22 +151,26 @@
     nerd-fonts.hack
   ];
 
+  # virtualisation
+  programs.virt-manager.enable = true;
+  user.groups = {
+    libvirtd.members = [ "dennis" ];
+    docker.members = [ "dennis" ];
+  };
   virtualisation = {
     docker.enable = true;
     libvirtd.enable = true;
-    spiceUSBRedirection = true;
+    spiceUSBRedirection.enable = true;
   };
 
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall.allowedTCPPorts = [
+    53317 # localsend
+  ];
+  networking.firewall.allowedUDPPorts = [
+    53317 # localsend
+  ];
 
   system.stateVersion = "25.05"; # Did you read the comment?
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
