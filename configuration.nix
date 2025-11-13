@@ -21,6 +21,7 @@
   services.xserver.xkb = {
     layout = "de";
     variant = "us";
+    options = "ctrl:nocaps";
   };
 
   security.polkit.enable = true;
