@@ -6,7 +6,8 @@
   config = lib.mkIf config.modules.sway.enable {
     services = {
       gnome.gnome-keyring.enable = true;
-      xserver.displayManager.lightdm.enable = true;
+      displayManager.sddm.enable = true;
+      displayManager.sddm.wayland.enable = true;
     };
     programs.uwsm = {
       enable = true;

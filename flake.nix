@@ -10,49 +10,32 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+    let hosts = [ { name = "gengar"; } { name = "nixos-vm"; } ];
+    in {
 
-    nixosConfigurations = {
-      nixos-vm = nixpkgs.lib.nixosSystem {
-        system = "x86_64_linux";
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./configuration.nix
-          ./hosts/nixos-vm/configuration.nix
-          ./hosts/nixos-vm/hardware-configuration.nix
-          ./hosts/nixos-vm/user.nix
-          home-manager.nixosModules.home-manager
-          { networking.hostName = "nixos-vm"; }
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              users.dennis = import ./home.nix;
-              backupFileExtension = "backup";
-            };
-          }
-        ];
-      };
-      gengar = nixpkgs.lib.nixosSystem {
-        system = "x86_64_linux";
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./configuration.nix
-          ./hosts/gengar/configuration.nix
-          ./hosts/gengar/hardware-configuration.nix
-          ./hosts/gengar/user.nix
-          home-manager.nixosModules.home-manager
-          { networking.hostName = "gengar"; }
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              users.dennis = import ./home.nix;
-              backupFileExtension = "backup";
-            };
-          }
-        ];
-      };
+      nixosConfigurations = builtins.listToAttrs (map (host: {
+        name = host.name;
+        value = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs; };
+          system = "x86_64-linux";
+          modules = [
+            ./configuration.nix
+            ./hosts/${host.name}/configuration.nix
+            ./hosts/${host.name}/hardware-configuration.nix
+            ./hosts/${host.name}/user.nix
+            home-manager.nixosModules.home-manager
+            { networking.hostName = host.name; }
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                users.dennis = import ./home.nix;
+                backupFileExtension = "backup";
+              };
+            }
+          ];
+        };
+      }) hosts);
     };
-  };
 }

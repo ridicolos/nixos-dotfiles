@@ -9,9 +9,9 @@
 
     services = {
       gnome.gnome-keyring.enable = true;
-
-      # programs.waybar.enable = true;
-      xserver.displayManager.lightdm.enable = true;
+      displayManager.sddm.enable = true;
+      displayManager.sddm.wayland.enable = true;
     };
+    environment.systemPackages = with pkgs; [ kdlfmt ];
   };
 }

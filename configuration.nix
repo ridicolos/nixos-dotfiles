@@ -40,8 +40,6 @@
     #jack.enable = true;
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.defaultUserShell = pkgs.zsh;
   users.users.dennis = {
@@ -51,17 +49,44 @@
     extraGroups = [ "networkmanager" "wheel" ];
   };
 
-  # Install firefox.
   programs = {
+    git.enable = true;
     zsh.enable = true;
-    firefox.enable = true;
+    firefox = {
+      enable = true;
+      languagePacks = [ "de" "en-US" ];
+
+    };
     neovim = {
       enable = true;
       defaultEditor = true;
+      withPython3 = true;
+      withNodeJs = true;
+      vimAlias = true;
+      viAlias = true;
     };
+    tmux.enable = true;
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
+    };
+    chromium = {
+      enable = true;
+      extensions = [
+        "cjpalhdlnbpafiamejdnhcphjbkeiagm" # ublock origin
+      ];
+      extraOpts = {
+        "BrowserSignin" = 0;
+        "SyncDisabled" = true;
+        "PasswordManagerEnabled" = false;
+        "SpellcheckEnabled" = true;
+        "SpellcheckLanguage" = [ "de" "en-US" ];
+      };
+    };
+    wireshark.enable = true;
+    localsend = {
+      enable = true;
+      openFirewall = true;
     };
   };
 
@@ -77,17 +102,15 @@
   programs.thunderbird = { enable = true; };
 
   environment.systemPackages = with pkgs; [
+    pwvucontrol
     qemu_kvm
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     curl
     wget
-    git
     jq
     inetutils
     zip
     unzip
     unp
-    tmux
     fastfetch
     openssl
     speedtest-cli
@@ -113,7 +136,6 @@
     kdePackages.kleopatra
     kdePackages.kdenlive
     zathura
-    wireshark
     calibre
     # jellyfin-media-player qt5 security concern
     rustdesk-flutter
@@ -126,7 +148,6 @@
     cryptomator
     libreoffice-qt6
     onlyoffice-desktopeditors
-    localsend
     bruno
     signal-desktop
     threema-desktop
@@ -136,6 +157,9 @@
     razergenie
     logseq
     nextcloud-client
+    keepassxc
+
+    papirus-icon-theme
   ];
 
   hardware = {
@@ -153,7 +177,7 @@
 
   # virtualisation
   programs.virt-manager.enable = true;
-  user.groups = {
+  users.groups = {
     libvirtd.members = [ "dennis" ];
     docker.members = [ "dennis" ];
   };
@@ -165,12 +189,8 @@
 
   # services.openssh.enable = true;
 
-  networking.firewall.allowedTCPPorts = [
-    53317 # localsend
-  ];
-  networking.firewall.allowedUDPPorts = [
-    53317 # localsend
-  ];
+  networking.firewall.allowedTCPPorts = [ ];
+  networking.firewall.allowedUDPPorts = [ ];
 
   system.stateVersion = "25.05"; # Did you read the comment?
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
