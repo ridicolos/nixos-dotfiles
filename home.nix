@@ -2,11 +2,11 @@
 
 let
   home = "${config.home.homeDirectory}/dev/nixos-dotfiles/config/dotfiles";
-  dotfiles =
-    "${config.home.homeDirectory}/dev/nixos-dotfiles/config/dotfiles/.config";
+  dotfiles = "${config.home.homeDirectory}/dev/nixos-dotfiles/config/dotfiles/.config";
   create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
   xdg-configs = {
     sway = "sway";
+    niri = "niri";
     waybar = "waybar";
     dunst = "dunst";
     rofi = "rofi";
@@ -35,7 +35,8 @@ let
     ".local/bin" = ".local/bin";
   };
 
-in {
+in
+{
   home.username = "dennis";
   home.homeDirectory = "/home/dennis";
   programs.git.enable = true;
@@ -46,24 +47,7 @@ in {
     recursive = true;
   }) xdg-configs;
 
-  home.file = builtins.mapAttrs
-    (name: subpath: { source = create_symlink "${home}/${subpath}"; })
-    home-configs;
-
-  home.packages = with pkgs; [
-    git
-    neovim
-    ripgrep
-    nodejs
-    starship
-    tmux
-    gnumake
-    yarn
-    fzf
-    killall
-    htop
-    unp
-    unzip
-    rar
-  ];
+  home.file = builtins.mapAttrs (name: subpath: {
+    source = create_symlink "${home}/${subpath}";
+  }) home-configs;
 }

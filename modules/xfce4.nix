@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   options.modules.xfce.enable = lib.mkEnableOption "enables xfce-module";
@@ -14,7 +19,10 @@
       xfconf.enable = true;
       thunar = {
         enable = true;
-        plugins = with pkgs.xfce; [ thunar-archive-plugin thunar-volman ];
+        plugins = with pkgs.xfce; [
+          thunar-archive-plugin
+          thunar-volman
+        ];
       };
     };
     services.xserver = {
