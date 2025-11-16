@@ -1,17 +1,26 @@
 {
   config,
-  lib,
-  inputs,
   ...
 }:
-
 {
   imports = [ ../../modules/default.nix ];
 
+  # will be enabled by default (not a specialisation)
   config.modules = {
-    plasma.enable = true;
-    sway.enable = false;
-    xfce.enable = false;
-    niri.enable = false;
+    xfce.enable = config.specialisation != { };
+  };
+
+  config.specialisation = {
+    plasma.configuration = {
+      config.modules = {
+        plasma.enable = true;
+      };
+    };
+    wm.configuration = {
+      config.modules = {
+        sway.enable = true;
+        niri.enable = true;
+      };
+    };
   };
 }

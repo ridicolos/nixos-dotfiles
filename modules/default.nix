@@ -156,6 +156,7 @@
     kdePackages.kdenlive
     kdePackages.okular
     pwvucontrol
+    pavucontrol
     zathura
     calibre
     # jellyfin-media-player qt5 security concern
