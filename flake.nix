@@ -13,6 +13,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.4.3";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -21,6 +25,7 @@
       nixpkgs,
       home-manager,
       plasma-manager,
+      lanzaboote,
       ...
     }@inputs:
     let
@@ -43,6 +48,7 @@
               ./hosts/${host.name}/configuration.nix
               ./hosts/${host.name}/user.nix
               home-manager.nixosModules.home-manager
+              lanzaboote.nixosModules.lanzaboote
               { networking.hostName = host.name; }
               {
                 home-manager = {

@@ -94,6 +94,7 @@
         "networkmanager"
         "wheel"
         "i2c"
+        "openrazer"
       ];
     };
   };
@@ -191,6 +192,7 @@
     chromium
 
     papirus-icon-theme
+    openrazer-daemon
   ];
 
   fonts.packages = with pkgs; [
