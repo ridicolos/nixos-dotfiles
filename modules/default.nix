@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   imports = [
@@ -15,7 +15,14 @@
 
   security.rtkit.enable = true;
   security.polkit.enable = true;
-  services.printing.enable = true;
+  services = {
+    xserver.xkb = {
+      layout = "de";
+      variant = "us";
+      options = "ctrl:nocaps";
+    };
+    printing.enable = true;
+  };
 
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [
@@ -24,13 +31,9 @@
   ];
 
   console.keyMap = "en";
-  services.xserver.xkb = {
-    layout = "de";
-    variant = "us";
-    options = "ctrl:nocaps";
-  };
 
   hardware = {
+    i2c.enable = true;
     wooting.enable = true;
     openrazer.enable = true;
     flipperzero.enable = true;
@@ -74,6 +77,7 @@
     zsh.enable = true;
     tmux.enable = true;
     wireshark.enable = true;
+    chromium.enable = true;
     localsend = {
       enable = true;
       openFirewall = true;
@@ -89,6 +93,7 @@
       extraGroups = [
         "networkmanager"
         "wheel"
+        "i2c"
       ];
     };
   };
@@ -151,10 +156,13 @@
     fwupd
     ffmpeg
     rustup
+    ddcutil
 
     kdePackages.kleopatra
     kdePackages.kdenlive
     kdePackages.okular
+    freecad
+    bambu-studio
     pwvucontrol
     pavucontrol
     zathura
@@ -180,6 +188,7 @@
     logseq
     nextcloud-client
     keepassxc
+    chromium
 
     papirus-icon-theme
   ];
@@ -189,6 +198,16 @@
     nerd-fonts.iosevka-term
     nerd-fonts.hack
   ];
+
+  system.activationScripts.report-changes = ''
+    PATH=$PATH:${
+      lib.makeBinPath [
+        pkgs.nvd
+        pkgs.nix
+      ]
+    }
+    nvd diff $(ls -dv /nix/var/nix/profiles/system-*-link | tail -2)
+  '';
 
   system.stateVersion = "25.05";
 }

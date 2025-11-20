@@ -25,6 +25,7 @@
     }@inputs:
     let
       hosts = [
+        { name = "enton"; }
         { name = "gengar"; }
         { name = "nixos-vm"; }
       ];

@@ -50,7 +50,7 @@ in
         in
         listToAttrs [
           (extension "ublock-origin" "uBlock0@raymondhill.net")
-          (extension "keepassxc" "keepassxc-browser@keepassxc.org")
+          (extension "keepassxc-browser" "keepassxc-browser@keepassxc.org")
           (extension "clearurls" "{74145f27-f039-47ce-a470-a662b129930a}")
           (extension "sponsorblock" "sponsorBlocker@ajay.app")
           (extension "return-youtube-dislikes" "{762f9885-5a13-4abd-9c77-433dcd38b8fd}")

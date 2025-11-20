@@ -13,8 +13,6 @@ let
     uwsm = "uwsm";
     foot = "foot";
 
-    xfce4 = "xfce4";
-
     fastfetch = "fastfetch";
     swappy = "swappy";
     zathura = "zathura";

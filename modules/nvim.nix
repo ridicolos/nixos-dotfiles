@@ -23,6 +23,7 @@
       terraform-ls
       lua-language-server
       texlab
+      python313Packages.python-lsp-server
 
       # lint
       tflint
