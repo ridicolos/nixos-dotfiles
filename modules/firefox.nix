@@ -57,6 +57,7 @@ in
           (extension "dont-track-me-google1" "dont-track-me-google@robwu.nl")
           (extension "multi-account-containers" "@testpilot-containers")
           (extension "facebook-container" "@contain-facebook")
+          (extension "german-dictionary-de_de-for-sp" "de_DE@dicts.j3e.de")
         ];
 
       Preferences = {
