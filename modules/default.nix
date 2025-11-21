@@ -121,6 +121,11 @@
     };
   };
 
+  environment.variables = {
+    LANG = "en_US.UTF-8";
+    LANGUAGE = "en_US:de_DE";
+  };
+
   environment.systemPackages = with pkgs; [
     git
     starship
@@ -193,6 +198,10 @@
 
     papirus-icon-theme
     openrazer-daemon
+
+    hunspell
+    hunspellDicts.en_US
+    hunspellDicts.de_DE
   ];
 
   fonts.packages = with pkgs; [
