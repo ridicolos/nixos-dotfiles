@@ -6,6 +6,7 @@
       Preferences = {
         "mail.openpgp.allow_external_gnupg" = true;
         "mail.openpgp.fetch_pubkeys_from_gnupg" = true;
+        "calendar.week.start" = 1;
       };
       ExtensionSettings = {
         "*".installation_mode = "blocked";
