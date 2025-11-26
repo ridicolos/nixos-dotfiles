@@ -6,6 +6,6 @@
   imports = [ ../../modules/default.nix ];
 
   config.modules = {
-    xfce.enable = true;
+    plasma.enable = true;
   };
 }
